@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Análisis de compra de vivienda · Bogotá</title>
+<style>
+:root{
+  --ink:#16231d; --ink2:#5a6b63; --gold:#1D9E75; --gold-d:#0f6e56;
+  --purple:#534AB7; --bg:#f5f4f0; --card:#ffffff; --line:#e6e3da;
+  --warn:#e24b4a; --shadow:0 8px 30px rgba(20,40,30,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.55;overflow-x:hidden}
+
+/* ---- Animated hero ---- */
+.hero{position:relative;min-height:88vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:2rem;overflow:hidden;background:linear-gradient(135deg,#0f3d2e 0%,#16513c 45%,#3C3489 100%)}
+.hero::before{content:"";position:absolute;inset:0;background:
+  radial-gradient(circle at 20% 30%,rgba(29,158,117,.35),transparent 40%),
+  radial-gradient(circle at 80% 70%,rgba(83,74,183,.4),transparent 45%);
+  animation:drift 18s ease-in-out infinite alternate}
+@keyframes drift{0%{transform:translate(0,0) scale(1)}100%{transform:translate(-4%,3%) scale(1.15)}}
+.blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.5;animation:float 14s ease-in-out infinite}
+.blob.b1{width:340px;height:340px;background:#1D9E75;top:-80px;left:-60px}
+.blob.b2{width:300px;height:300px;background:#7F77DD;bottom:-70px;right:-40px;animation-delay:-5s}
+.blob.b3{width:220px;height:220px;background:#3ED9A4;top:40%;right:20%;animation-delay:-9s}
+@keyframes float{0%,100%{transform:translateY(0) translateX(0)}50%{transform:translateY(-40px) translateX(25px)}}
+.hero-content{position:relative;z-index:2;color:#fff;max-width:820px}
+.hero .kick{display:inline-block;font-size:.8rem;letter-spacing:.28em;text-transform:uppercase;color:#9fe1cb;border:1px solid rgba(159,225,203,.4);padding:.45rem 1.1rem;border-radius:40px;margin-bottom:1.6rem;opacity:0;animation:fadeUp .8s .1s forwards}
+.hero h1{font-size:clamp(2.4rem,6vw,4.2rem);font-weight:800;line-height:1.05;letter-spacing:-.02em;margin-bottom:1.1rem;opacity:0;animation:fadeUp .9s .25s forwards}
+.hero h1 .hl{background:linear-gradient(120deg,#3ED9A4,#9fe1cb);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{font-size:clamp(1rem,2.2vw,1.3rem);color:#d7e8e0;max-width:620px;margin:0 auto 2.2rem;opacity:0;animation:fadeUp .9s .4s forwards}
+.hero-stats{display:flex;gap:2.4rem;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp .9s .55s forwards}
+.hstat .n{font-size:2.3rem;font-weight:800;color:#fff;display:block}
+.hstat .l{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:#9fe1cb}
+.scroll-cue{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:2;color:#9fe1cb;font-size:1.6rem;animation:bob 1.8s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(10px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+
+/* ---- Layout ---- */
+.wrap{max-width:1120px;margin:0 auto;padding:0 1.4rem}
+section{padding:4.5rem 0}
+.sec-head{text-align:center;margin-bottom:2.8rem}
+.sec-head .tag{font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:700}
+.sec-head h2{font-size:clamp(1.7rem,4vw,2.6rem);font-weight:800;letter-spacing:-.02em;margin-top:.4rem}
+.sec-head p{color:var(--ink2);max-width:560px;margin:.7rem auto 0}
+
+/* reveal on scroll */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .7s cubic-bezier(.2,.7,.3,1),transform .7s cubic-bezier(.2,.7,.3,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* ---- Podium ---- */
+.podium{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;align-items:end}
+.pod{background:var(--card);border-radius:20px;overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--line);transition:transform .4s,box-shadow .4s;position:relative}
+.pod:hover{transform:translateY(-10px);box-shadow:0 20px 50px rgba(20,40,30,.16)}
+.pod .ph{height:180px;overflow:hidden;position:relative}
+.pod .ph img{width:100%;height:100%;object-fit:cover;transition:transform .8s}
+.pod:hover .ph img{transform:scale(1.08)}
+.pod .medal{position:absolute;top:12px;left:12px;font-size:1.5rem;background:rgba(255,255,255,.92);width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+.pod .pb{padding:1.1rem 1.2rem 1.3rem}
+.pod.first{grid-row:1;transform:translateY(-24px)}
+.pod.first:hover{transform:translateY(-34px)}
+.pod .rank-tag{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-d)}
+.pod h3{font-size:1.12rem;font-weight:800;margin:.2rem 0 .15rem;letter-spacing:-.01em}
+.pod .price{font-size:1.5rem;font-weight:800;color:var(--ink)}
+.pod .meta{font-size:.82rem;color:var(--ink2);margin-top:.3rem}
+.pod .why{font-size:.85rem;color:var(--ink2);margin-top:.7rem;border-top:1px solid var(--line);padding-top:.7rem}
+@media(max-width:760px){.podium{grid-template-columns:1fr}.pod.first{transform:none}}
+
+/* ---- Controls ---- */
+.controls{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;margin-bottom:2.2rem}
+.chip{font-size:.85rem;padding:.5rem 1.1rem;border-radius:40px;border:1.5px solid var(--line);background:var(--card);color:var(--ink2);cursor:pointer;transition:all .25s;font-weight:600}
+.chip:hover{border-color:var(--gold);color:var(--gold-d)}
+.chip.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.sortbar{display:flex;gap:.6rem;justify-content:center;align-items:center;margin-bottom:2rem;font-size:.85rem;color:var(--ink2);flex-wrap:wrap}
+.sortbar select{padding:.45rem .8rem;border-radius:10px;border:1.5px solid var(--line);background:var(--card);font-size:.85rem;color:var(--ink);cursor:pointer;font-weight:600}
+
+/* ---- Grid cards ---- */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.5rem}
+.card{background:var(--card);border-radius:18px;overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--line);display:flex;flex-direction:column;transition:transform .4s,box-shadow .4s;opacity:0;transform:translateY(30px)}
+.card.show{opacity:1;transform:none}
+.card:hover{transform:translateY(-8px);box-shadow:0 18px 44px rgba(20,40,30,.15)}
+.card.danger{border:1.5px solid #f3b4b4}
+.card .ph{height:200px;overflow:hidden;position:relative}
+.card .ph img{width:100%;height:100%;object-fit:cover;transition:transform .8s}
+.card:hover .ph img{transform:scale(1.07)}
+.card .tags{position:absolute;top:10px;left:10px;display:flex;gap:.4rem;flex-wrap:wrap}
+.t{font-size:.68rem;font-weight:700;padding:.28rem .6rem;border-radius:30px;backdrop-filter:blur(6px)}
+.t.zona{background:rgba(255,255,255,.9);color:var(--ink)}
+.t.win{background:var(--gold);color:#fff}
+.t.warn{background:var(--warn);color:#fff}
+.card .pricebadge{position:absolute;bottom:10px;right:10px;background:rgba(15,61,46,.92);color:#fff;font-weight:800;font-size:1.05rem;padding:.35rem .8rem;border-radius:12px;backdrop-filter:blur(4px)}
+.card .body{padding:1.1rem 1.25rem 1.3rem;display:flex;flex-direction:column;flex:1}
+.card h3{font-size:1.12rem;font-weight:800;letter-spacing:-.01em;line-height:1.25}
+.card .sub{font-size:.82rem;color:var(--ink2);margin:.3rem 0 .9rem}
+.specs{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin-bottom:1rem}
+.spec{background:var(--bg);border-radius:10px;padding:.5rem;text-align:center}
+.spec .v{font-weight:800;font-size:.98rem}
+.spec .k{font-size:.66rem;color:var(--ink2);text-transform:uppercase;letter-spacing:.05em}
+.pm2tag{display:inline-block;font-size:.78rem;font-weight:700;color:var(--purple);background:#eeedfe;padding:.2rem .6rem;border-radius:8px;margin-bottom:.9rem;align-self:flex-start}
+.pc{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:auto}
+.pc h4{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem}
+.pc .pros h4{color:var(--gold-d)}.pc .cons h4{color:var(--warn)}
+.pc ul{list-style:none}
+.pc li{font-size:.78rem;color:var(--ink2);padding-left:.9rem;position:relative;margin-bottom:.25rem;line-height:1.35}
+.pc .pros li::before{content:"+";position:absolute;left:0;color:var(--gold);font-weight:800}
+.pc .cons li::before{content:"−";position:absolute;left:0;color:var(--warn);font-weight:800}
+.card .foot{margin-top:1rem;padding-top:.8rem;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;font-size:.78rem;color:var(--ink2)}
+.card .foot a{color:var(--purple);font-weight:700;text-decoration:none}
+.card .foot a:hover{text-decoration:underline}
+
+/* ---- Chart bars ---- */
+.chartbox{background:var(--card);border-radius:18px;box-shadow:var(--shadow);border:1px solid var(--line);padding:1.8rem}
+.brow{display:flex;align-items:center;gap:.8rem;margin-bottom:.7rem}
+.brow .nm{width:200px;font-size:.82rem;color:var(--ink2);flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brow .tr{flex:1;height:22px;background:var(--bg);border-radius:6px;overflow:hidden}
+.brow .fl{height:100%;border-radius:6px;width:0;transition:width 1.2s cubic-bezier(.2,.8,.3,1)}
+.brow .vl{width:64px;text-align:right;font-weight:800;font-size:.82rem;flex-shrink:0}
+.rk{display:inline-flex;width:18px;height:18px;border-radius:50%;align-items:center;justify-content:center;font-size:.66rem;font-weight:800;margin-right:.4rem}
+.rk.r1{background:#fac775;color:#412402}.rk.r2{background:#d3d1c7;color:#2c2c2a}.rk.r3{background:#f5c4b3;color:#4a1b0c}
+
+/* ---- Verdict ---- */
+.verdicts{display:grid;gap:1.2rem;max-width:820px;margin:0 auto}
+.vd{background:var(--card);border-radius:16px;box-shadow:var(--shadow);border:1px solid var(--line);padding:1.5rem 1.7rem;border-left:6px solid var(--gold)}
+.vd.silver{border-left-color:var(--purple)}.vd.warn{border-left-color:var(--warn)}
+.vd h3{font-size:1.2rem;font-weight:800;margin-bottom:.5rem}
+.vd p{color:var(--ink2);font-size:.95rem}
+
+/* checklist */
+.check{max-width:760px;margin:0 auto;background:var(--card);border-radius:16px;box-shadow:var(--shadow);border:1px solid var(--line);padding:1.7rem 2rem}
+.check li{list-style:none;padding:.6rem 0 .6rem 2rem;position:relative;font-size:.92rem;color:var(--ink2);border-bottom:1px solid var(--line)}
+.check li:last-child{border-bottom:none}
+.check li::before{content:"○";position:absolute;left:0;top:.55rem;color:var(--gold);font-size:1.1rem;transition:all .3s}
+.check li.done{color:var(--ink2);text-decoration:line-through;opacity:.6}
+.check li.done::before{content:"●";color:var(--gold)}
+.check li{cursor:pointer}
+
+footer{background:#0f3d2e;color:#9fe1cb;text-align:center;padding:2.5rem 1.4rem;font-size:.82rem;line-height:1.6}
+footer strong{color:#fff}
+.toplink{display:inline-block;margin-top:1rem;color:#3ED9A4;text-decoration:none;font-weight:700}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+  <div class="hero-content">
+    <span class="kick">Análisis comparativo · Bogotá D.C.</span>
+    <h1>17 inmuebles.<br>Un solo <span class="hl">veredicto claro</span>.</h1>
+    <p>Precio, área, estrato, administración y potencial de arriendo — todo cruzado para encontrar la mejor compra de vivienda.</p>
+    <div class="hero-stats">
+      <div class="hstat"><span class="n" data-count="17">0</span><span class="l">Inmuebles</span></div>
+      <div class="hstat"><span class="n" data-count="6">0</span><span class="l">Zonas</span></div>
+      <div class="hstat"><span class="n">$220–352M</span><span class="l">Rango precio</span></div>
+    </div>
+  </div>
+  <div class="scroll-cue">↓</div>
+</div>
+
+<section id="podium">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="tag">El top 3</span><h2>Los 3 mejores para vivienda</h2><p>Rankeados por balance entre precio, área útil, estrato y liquidez de arriendo.</p></div>
+    <div class="podium reveal" id="podiumGrid"></div>
+  </div>
+</section>
+
+<section id="explorar" style="background:#efede6">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="tag">Explora</span><h2>Los 17 inmuebles</h2><p>Filtra por zona y ordena como quieras. Pasa el cursor sobre cada tarjeta.</p></div>
+    <div class="controls reveal" id="chips"></div>
+    <div class="sortbar reveal">
+      <span>Ordenar por:</span>
+      <select id="sortSel">
+        <option value="rank">Mejor compra (recomendado)</option>
+        <option value="pm2">Menor precio/m²</option>
+        <option value="pr">Menor precio total</option>
+        <option value="m2">Mayor área</option>
+        <option value="adm">Menor administración</option>
+      </select>
+      <span id="count"></span>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<section id="chart">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="tag">Valor</span><h2>Precio por m²</h2><p>Menor barra = mejor relación de valor. Las barras se animan al entrar en pantalla.</p></div>
+    <div class="chartbox reveal" id="chartBox"></div>
+  </div>
+</section>
+
+<section id="verdict" style="background:#efede6">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="tag">Conclusión</span><h2>Veredicto</h2></div>
+    <div class="verdicts reveal">
+      <div class="vd"><h3>🥇 Mejor compra global — Chapinero Alto, $272M</h3><p>Único con 2 alcobas a precio bajo, administración mínima ($174k) y la mayor liquidez de arriendo (renta estimada $1.9–2.5M/mes). El riesgo: antigüedad &gt;30 años, mitigable con estudio técnico. Si buscas vivienda + inversión en una sola decisión, este gana.</p></div>
+      <div class="vd silver"><h3>🥈 Mejor valor por m² — Pasadena 46m² / El Castillo 52m²</h3><p>Pasadena ($266M, $5.78M/m²) tiene el metro más barato de los 17 y parqueadero; ideal como inversión pura. El Castillo ($350M, estrato 5, 52m²) ofrece el mejor activo a futuro si priorizas plusvalía y calidad sobre número de cuartos.</p></div>
+      <div class="vd warn"><h3>⚠️ Descartar o verificar</h3><p>La <strong>oficina de Chapinero</strong> ($300M) es de uso comercial: no es vivienda. Vigila administraciones de <strong>$690k (Galerías interior)</strong> y <strong>$910k (oficina)</strong> — en 10 años suman decenas de millones. El apartaestudio con admón. de <strong>$100k</strong> es atípico: confírmalo, suele ser error del anuncio.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="checklist">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="tag">Antes de firmar</span><h2>Checklist de verificación</h2><p>Toca cada ítem para marcarlo.</p></div>
+    <ul class="check reveal" id="checkList">
+      <li>Confirmar el valor real de la administración del último año (sobre todo el de $100k).</li>
+      <li>En antigüedad &gt;30 años: estudio de patología estructural y estado de la copropiedad.</li>
+      <li>Oficina Chapinero: revisar POT y ficha de uso del suelo antes de considerarla.</li>
+      <li>Certificado de tradición y libertad (sin gravámenes) y paz y salvo de administración.</li>
+      <li>Verificar parqueadero: matrícula propia o asignado.</li>
+      <li>Presupuestar gastos de cierre: notariado, registro y beneficencia (~1.7–2%).</li>
+      <li>Cruzar arriendo estimado de la zona contra la cuota hipotecaria (evaluar como inversión).</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <p><strong>Análisis de compra de vivienda · Bogotá D.C.</strong> · Elaborado el 1 de junio de 2026</p>
+  <p>Datos y fotos tomados de los anuncios de FincaRaíz. Precios, áreas, administración y disponibilidad deben verificarse directamente con cada vendedor. No constituye asesoría financiera ni inmobiliaria formal.</p>
+  <a class="toplink" href="#podium">↑ Volver arriba</a>
+</footer>
+
+<script>
+const DATA = [{"img": "a8", "name": "Chapinero Alto · 2 alcobas", "zona": "Chapinero", "pr": 272, "m2": 34, "pm2": 8.0, "hab": 2, "ban": 1, "parq": 0, "est": 4, "adm": 174, "piso": 5, "ant": ">30a", "tipo": "Apartaestudio", "cod": "193707449", "lote": 1, "pros": ["2 alcobas, único con esta configuración", "Administración más baja ($174k)", "Pet friendly", "Renta estimada $1.9M–$2.5M/mes", "Chapinero Alto, alta valorización"], "cons": ["Antigüedad >30 años", "Sin parqueadero", "34m² para 2 alcobas = ajustado", "Inmobiliaria poco conocida"], "url": "https://www.fincaraiz.com.co/-/193707449", "imgsrc": "img/a8.jpg"}, {"img": "a5", "name": "Chapinero / Marly (Houm)", "zona": "Chapinero", "pr": 220, "m2": 32, "pm2": 5.87, "hab": 1, "ban": 1, "parq": 0, "est": 3, "adm": 460, "piso": null, "ant": "16-30a", "tipo": "Apartamento", "cod": "193423119", "lote": 1, "pros": ["Precio absoluto más bajo de los 17", "m² muy económico ($5.87M)", "Zona Marly, cerca a Javeriana", "Ascensor"], "cons": ["Estrato 3", "Sin parqueadero", "Piso no especificado", "No admite mascotas", "Intermediado por Houm"], "url": "https://www.fincaraiz.com.co/-/193423119", "imgsrc": "img/a5.jpg"}, {"img": "a4", "name": "Pasadena · 46m² + parqueadero", "zona": "Suba", "pr": 266, "m2": 46, "pm2": 5.78, "hab": 1, "ban": 1, "parq": 1, "est": 4, "adm": 563, "piso": 4, "ant": "9-15a", "tipo": "Apartaestudio", "cod": "193643009", "lote": 1, "pros": ["Mejor $/m² de los 17 ($5.78M)", "Incluye parqueadero", "46m² + balcón", "Antigüedad media-baja"], "cons": ["Administración alta ($563k)", "Suba, menor centralidad", "Anuncio escueto, 5 fotos"], "url": "https://www.fincaraiz.com.co/-/193643009", "imgsrc": "img/a4.jpg"}, {"img": "a3", "name": "Chapinero · 45m²", "zona": "Chapinero", "pr": 289, "m2": 45, "pm2": 6.42, "hab": 1, "ban": 1, "parq": 0, "est": 4, "adm": 530, "piso": 4, "ant": "16-30a", "tipo": "Apartaestudio", "cod": "193251008", "lote": 1, "pros": ["Mayor área entre apartaestudios", "Media cuadra Sto. Tomás, 3c Javeriana", "Ascensor y vigilancia 24h"], "cons": ["Administración alta ($530k)", "Sin parqueadero", "Vista interna"], "url": "https://www.fincaraiz.com.co/-/193251008", "imgsrc": "img/a3.jpg"}, {"img": "a6", "name": "Pasadena · estrato 5", "zona": "Suba", "pr": 330, "m2": 40, "pm2": 8.25, "hab": 1, "ban": 1, "parq": 1, "est": 5, "adm": 320, "piso": 3, "ant": "9-15a", "tipo": "Apartamento", "cod": "193750450", "lote": 1, "pros": ["Estrato 5 (mayor valorización)", "Parqueadero incluido", "Administración baja ($320k)"], "cons": ["Precio alto del lote 1", "Área privada real 35m² → $/m² ~$9.4M", "Vista interior, Suba"], "url": "https://www.fincaraiz.com.co/-/193750450", "imgsrc": "img/a6.jpg"}, {"img": "a1", "name": "Marly · apartaestudio", "zona": "Chapinero", "pr": 325, "m2": 40, "pm2": 8.13, "hab": 1, "ban": 1, "parq": 0, "est": 4, "adm": null, "piso": 6, "ant": "16-30a", "tipo": "Apartaestudio", "cod": "192840906", "lote": 1, "pros": ["Piso 6 con ascensor", "Barrio Marly, tradicional y céntrico", "Cerca universidades y clínicas"], "cons": ["Administración desconocida", "Sin parqueadero", "Caro para 40m² usados"], "url": "https://www.fincaraiz.com.co/-/192840906", "imgsrc": "img/a1.jpg"}, {"img": "a9", "name": "Chapinero · futuro Metro (Calpa)", "zona": "Chapinero", "pr": 300, "m2": 32.8, "pm2": 9.15, "hab": 1, "ban": 1, "parq": 1, "est": 4, "adm": 446, "piso": 3, "ant": ">30a", "tipo": "Apartaestudio", "cod": "193729745", "lote": 1, "pros": ["Remodelado, acabados de alta calidad", "Parqueadero privado", "A 2 cuadras del futuro Metro", "Exterior, buena luz"], "cons": ["$/m² alto para >30 años", "Metro aún no opera (plusvalía futura)", "Administración $446k"], "url": "https://www.fincaraiz.com.co/-/193729745", "imgsrc": "img/a9.jpg"}, {"img": "a2", "name": "Barrios Unidos · Cauttiva", "zona": "B. Unidos", "pr": 298, "m2": 31, "pm2": 9.61, "hab": 1, "ban": 1, "parq": 0, "est": 4, "adm": 250, "piso": 16, "ant": "<1a", "tipo": "Apartaestudio", "cod": "193796035", "lote": 1, "pros": ["Edificio nuevo (<1 año)", "Piso 16 con vista a cerros", "Amenidades (coworking, BBQ, gym)", "Cerca TransMilenio Suba×100"], "cons": ["$/m² más alto de los 17", "Solo 31m²", "Sin parqueadero", "Menor valorización que Chapinero"], "url": "https://www.fincaraiz.com.co/-/193796035", "imgsrc": "img/a2.jpg"}, {"img": "a7", "name": "Chapinero · Oficina", "zona": "Chapinero", "pr": 300, "m2": 44.3, "pm2": 6.77, "hab": 0, "ban": 1, "parq": 1, "est": 0, "adm": 910, "piso": 5, "ant": ">30a", "tipo": "Oficina", "cod": "193778034", "lote": 1, "danger": true, "pros": ["Terraza y parqueadero privados", "Ubicación prime (Cl.74×Cra.15)", "Opción amoblada, seguridad/alarma"], "cons": ["USO COMERCIAL: no es vivienda", "Admón. $910k/mes (la más alta)", "Antigüedad >30 años", "Riesgo de uso del suelo"], "url": "https://www.fincaraiz.com.co/-/193778034", "imgsrc": "img/a7.jpg"}, {"img": "c3", "name": "Galerías · 2 alcobas", "zona": "Galerías", "pr": 340, "m2": 43.9, "pm2": 7.74, "hab": 2, "ban": 1, "parq": 1, "est": 4, "adm": 488, "piso": 4, "ant": "16-30a", "tipo": "Apartamento", "cod": "193447910", "lote": 2, "pros": ["2 alcobas + parqueadero, lo más versátil", "Sobre Av. Calle 53, muy conectada", "$/m² competitivo para 2 cuartos", "Galerías, altísima demanda de arriendo"], "cons": ["1 solo baño para 2 alcobas", "Antigüedad 16-30a", "Admón. media ($488k)"], "url": "https://www.fincaraiz.com.co/-/193447910", "imgsrc": "img/c3.jpg"}, {"img": "c4", "name": "Chapinero · El Castillo, 52m²", "zona": "Chapinero", "pr": 350, "m2": 52, "pm2": 6.73, "hab": 1, "ban": 1, "parq": 1, "est": 5, "adm": 414, "piso": 2, "ant": "9-15a", "tipo": "Apartamento", "cod": "5927734", "lote": 2, "pros": ["$/m² más bajo del lote 2", "Estrato 5 → mayor plusvalía", "Excelente estado, chimenea, gas natural", "52m² + parqueadero"], "cons": ["Solo 1 alcoba", "Piso 2 (menos vista)", "Anuncio antiguo, revisar disponibilidad"], "url": "https://www.fincaraiz.com.co/-/5927734", "imgsrc": "img/c4.jpg"}, {"img": "c6", "name": "San Luis · 2 alcobas", "zona": "San Luis", "pr": 350, "m2": 48, "pm2": 7.29, "hab": 2, "ban": 1, "parq": 1, "est": 4, "adm": 572, "piso": null, "ant": "16-30a", "tipo": "Apartamento", "cod": "193464288", "lote": 2, "pros": ["2 alcobas + parqueadero en 48m²", "Sector central, buen transporte", "Buena distribución"], "cons": ["Administración alta ($572k)", "1 baño para 2 alcobas", "Piso no especificado"], "url": "https://www.fincaraiz.com.co/-/193464288", "imgsrc": "img/c6.jpg"}, {"img": "c5", "name": "Porciúncula · estrato 6", "zona": "Porciúncula", "pr": 350, "m2": 48, "pm2": 7.29, "hab": 1, "ban": 1, "parq": 1, "est": 6, "adm": 420, "piso": 4, "ant": ">30a", "tipo": "Apartamento", "cod": "193734851", "lote": 2, "pros": ["Estrato 6, el más alto de los 17", "48m² con pisos en madera", "Parqueadero, zona La Porciúncula"], "cons": ["Antigüedad >30 años", "Solo 1 alcoba", "Servicios públicos más caros (estrato 6)"], "url": "https://www.fincaraiz.com.co/-/193734851", "imgsrc": "img/c5.jpg"}, {"img": "c8", "name": "Galerías · 2 alc. (interior)", "zona": "Galerías", "pr": 352, "m2": 48, "pm2": 7.33, "hab": 2, "ban": 1, "parq": 1, "est": 4, "adm": 690, "piso": 4, "ant": ">30a", "tipo": "Apartamento", "cod": "193596004", "lote": 2, "danger": true, "pros": ["2 alcobas + parqueadero en Galerías", "Lavandería comunal incluida en admón.", "Seguridad 24h"], "cons": ["Admón. $690k/mes — la más alta del grupo", "Antigüedad >30 años", "Interior, sin vista", "Área privada real 43.5m²"], "url": "https://www.fincaraiz.com.co/-/193596004", "imgsrc": "img/c8.jpg"}, {"img": "c2", "name": "Chapinero · 2 baños", "zona": "Chapinero", "pr": 335, "m2": 39.5, "pm2": 8.48, "hab": 1, "ban": 2, "parq": 1, "est": 4, "adm": 566, "piso": 4, "ant": "9-15a", "tipo": "Apartamento", "cod": "193665093", "lote": 2, "pros": ["2 baños en 1 alcoba (cómodo)", "Parqueadero + depósito", "Gimnasio y terraza BBQ", "Antigüedad baja (9-15a)"], "cons": ["$/m² alto y admón. alta ($566k)", "Solo 1 alcoba en 39.5m²", "Menos área que opciones similares"], "url": "https://www.fincaraiz.com.co/-/193665093", "imgsrc": "img/c2.jpg"}, {"img": "c7", "name": "Chapinero · admón. $100k (?)", "zona": "Chapinero", "pr": 350, "m2": 42, "pm2": 8.33, "hab": 1, "ban": 1, "parq": 0, "est": 4, "adm": 100, "piso": null, "ant": "16-30a", "tipo": "Apartaestudio", "cod": "193689420", "lote": 2, "pros": ["Administración de solo $100k (si es real)", "Área privada (52m²) > construida", "Zona exclusiva de Chapinero"], "cons": ["Admón. atípica — posible error del anuncio", "Parqueadero no confirmado", "$/m² alto, datos incompletos"], "url": "https://www.fincaraiz.com.co/-/193689420", "imgsrc": "img/c7.jpg"}, {"img": "c1", "name": "Chapinero Central · 37m²", "zona": "Chapinero", "pr": 330, "m2": 37, "pm2": 8.92, "hab": 1, "ban": 1, "parq": 1, "est": 3, "adm": 304, "piso": 5, "ant": "16-30a", "tipo": "Apartaestudio", "cod": "193008219", "lote": 2, "pros": ["Precio bajo ($330M)", "Quinto piso exterior con balcón", "Parqueadero, zona estratégica", "Potencial de remodelación (upside)"], "cons": ["$/m² más alto de los 17, en estrato 3", "Requiere remodelación", "Solo 37m², 1 alcoba"], "url": "https://www.fincaraiz.com.co/-/193008219", "imgsrc": "img/c1.jpg"}];
+const zonaColor = {Chapinero:'#185FA5',Galerías:'#534AB7','Suba':'#3B6D11','San Luis':'#854F0B','Porciúncula':'#C2410C','B. Unidos':'#0F766E'};
+// rank order = order in DATA already curated best->worst-ish; assign explicit rank score
+DATA.forEach((d,i)=>d.rank=i);
+
+function fmtAdm(a){return a==null?'n/d':'$'+a+'k'}
+function parqTxt(d){return d.parq?'Sí':(d.cod=='193689420'?'?':'No')}
+
+// Podium (top 3)
+const top3=[...DATA].slice(0,3);
+const medals=['🥇','🥈','🥉'];const labels=['Mejor compra','Mejor valor m²','Sólido 2 alcobas'];
+const order=[1,0,2]; // visual: 2nd,1st,3rd
+document.getElementById('podiumGrid').innerHTML=order.map(pos=>{
+  const d=top3[pos];
+  return `<div class="pod ${pos==0?'first':''}">
+    <div class="ph"><img src="${d.imgsrc}" alt="${d.name}"><div class="medal">${medals[pos]}</div></div>
+    <div class="pb"><span class="rank-tag">${labels[pos]}</span>
+      <h3>${d.name}</h3><div class="price">$${d.pr}M</div>
+      <div class="meta">${d.m2}m² · ${d.hab||'—'} alc · est ${d.est||'com'} · $${d.pm2.toFixed(2)}M/m²</div>
+      <div class="why">${d.pros[0]}.</div>
+    </div></div>`;
+}).join('');
+
+// Chips
+const zonas=['Todas',...new Set(DATA.map(d=>d.zona))];
+let activeZona='Todas', activeSort='rank';
+document.getElementById('chips').innerHTML=zonas.map((z,i)=>`<button class="chip ${i==0?'active':''}" data-z="${z}">${z}</button>`).join('');
+document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{
+  document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));
+  c.classList.add('active');activeZona=c.dataset.z;render();
+});
+document.getElementById('sortSel').onchange=e=>{activeSort=e.target.value;render();};
+
+function render(){
+  let arr=activeZona=='Todas'?[...DATA]:DATA.filter(d=>d.zona==activeZona);
+  const sorters={rank:(a,b)=>a.rank-b.rank,pm2:(a,b)=>a.pm2-b.pm2,pr:(a,b)=>a.pr-b.pr,m2:(a,b)=>b.m2-a.m2,adm:(a,b)=>(a.adm??9999)-(b.adm??9999)};
+  arr.sort(sorters[activeSort]);
+  document.getElementById('count').textContent='· '+arr.length+' inmuebles';
+  const g=document.getElementById('grid');
+  g.innerHTML=arr.map(d=>{
+    const winTag=d.rank==0?'<span class="t win">🥇 Mejor compra</span>':'';
+    const warnTag=d.danger?'<span class="t warn">⚠ revisar</span>':'';
+    return `<div class="card ${d.danger?'danger':''}">
+      <div class="ph"><img src="${d.imgsrc}" alt="${d.name}">
+        <div class="tags"><span class="t zona">${d.zona}</span>${winTag}${warnTag}</div>
+        <div class="pricebadge">$${d.pr}M</div>
+      </div>
+      <div class="body">
+        <h3>${d.name}</h3>
+        <div class="sub">${d.tipo} · piso ${d.piso||'?'} · ${d.ant} · cód. ${d.cod}</div>
+        <span class="pm2tag">$${d.pm2.toFixed(2)}M / m²</span>
+        <div class="specs">
+          <div class="spec"><div class="v">${d.m2}</div><div class="k">m²</div></div>
+          <div class="spec"><div class="v">${d.hab||'—'}</div><div class="k">alcobas</div></div>
+          <div class="spec"><div class="v">${d.est||'C'}</div><div class="k">estrato</div></div>
+          <div class="spec"><div class="v">${d.ban}</div><div class="k">baños</div></div>
+          <div class="spec"><div class="v">${parqTxt(d)}</div><div class="k">parq.</div></div>
+          <div class="spec"><div class="v">${fmtAdm(d.adm)}</div><div class="k">admón.</div></div>
+        </div>
+        <div class="pc">
+          <div class="pros"><h4>Por qué sí</h4><ul>${d.pros.map(p=>`<li>${p}</li>`).join('')}</ul></div>
+          <div class="cons"><h4>Por qué no</h4><ul>${d.cons.map(c=>`<li>${c}</li>`).join('')}</ul></div>
+        </div>
+        <div class="foot"><span>${d.zona}</span><a href="${d.url}" target="_blank">Ver anuncio ↗</a></div>
+      </div>
+    </div>`;
+  }).join('');
+  requestAnimationFrame(()=>document.querySelectorAll('#grid .card').forEach((c,i)=>setTimeout(()=>c.classList.add('show'),i*55)));
+}
+render();
+
+// Chart
+const mx=Math.max(...DATA.map(d=>d.pm2));
+const chartSorted=[...DATA].sort((a,b)=>a.pm2-b.pm2);
+document.getElementById('chartBox').innerHTML=chartSorted.map((d,i)=>{
+  const rc=i==0?'r1':i==1?'r2':i==2?'r3':'';
+  return `<div class="brow"><div class="nm"><span class="rk ${rc}">${i+1}</span>${d.name}</div>
+    <div class="tr"><div class="fl" data-w="${(d.pm2/mx*100).toFixed(0)}" style="background:${zonaColor[d.zona]||'#888'}"></div></div>
+    <div class="vl">$${d.pm2.toFixed(2)}M</div></div>`;
+}).join('');
+
+// Animations: reveal + counters + chart fill
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{
+  if(e.isIntersecting){
+    e.target.classList.add('in');
+    if(e.target.id=='chartBox'){e.target.querySelectorAll('.fl').forEach(f=>f.style.width=f.dataset.w+'%');}
+    io.unobserve(e.target);
+  }
+});},{threshold:.15});
+document.querySelectorAll('.reveal,#chartBox').forEach(el=>io.observe(el));
+
+// counters
+document.querySelectorAll('[data-count]').forEach(el=>{
+  const t=+el.dataset.count;let n=0;const step=Math.max(1,Math.round(t/30));
+  const iv=setInterval(()=>{n+=step;if(n>=t){n=t;clearInterval(iv)}el.textContent=n;},40);
+});
+
+// checklist toggle
+document.querySelectorAll('#checkList li').forEach(li=>li.onclick=()=>li.classList.toggle('done'));
+</script>
+</body>
+</html>
